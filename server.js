@@ -59,7 +59,7 @@ app.post('/api/posts', async (req, res) => {
 
 // Partially update a post
 app.post('/api/posts/:id', async (req, res) => {
-  console.log('called');
+  console.log('called editing post route');
   try {
     const response = await axios.patch(
       `${API_URL}/posts/${req.params.id}`,

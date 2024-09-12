@@ -73,14 +73,10 @@ app.post('/posts', (req, res) => {
 });
 
 //CHALLENGE 4: PATCH a post when you just want to update one parameter
-
-// currently patch EDITS the post but then adds it to the end of the array
-// IT DOES NOT REPLACE THE PREVIOUS POST
-// is this an express.js thing like purging the working memory after a save
-// or is it my code???
-// Let's investigate...
 app.patch('/posts/:id', (req, res) => {
-  const id = parseInt(req.params.id) - 1;
+  const id = parseInt(req.params.id);
+  console.log('Patch ID: ', id);
+
   const existingPost = posts.find((post) => post.id === id);
   const replacementPost = {
     id: id,
@@ -92,6 +88,7 @@ app.patch('/posts/:id', (req, res) => {
   const searchIndex = posts.findIndex((post) => post.id === id);
   posts[searchIndex] = replacementPost;
   console.log(posts[searchIndex]);
+  console.log('Posts Array: ', posts);
   res.json(replacementPost);
 });
 
