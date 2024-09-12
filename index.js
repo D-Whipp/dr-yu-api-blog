@@ -74,6 +74,27 @@ app.post('/posts', (req, res) => {
 
 //CHALLENGE 4: PATCH a post when you just want to update one parameter
 
+// currently patch EDITS the post but then adds it to the end of the array
+// IT DOES NOT REPLACE THE PREVIOUS POST
+// is this an express.js thing like purging the working memory after a save
+// or is it my code???
+// Let's investigate...
+app.patch('/posts/:id', (req, res) => {
+  const id = parseInt(req.params.id) - 1;
+  const existingPost = posts.find((post) => post.id === id);
+  const replacementPost = {
+    id: id,
+    title: req.body.title || existingPost.title,
+    content: req.body.content || existingPost.content,
+    author: req.body.author || existingPost.author,
+    date: existingPost.date,
+  };
+  const searchIndex = posts.findIndex((post) => post.id === id);
+  posts[searchIndex] = replacementPost;
+  console.log(posts[searchIndex]);
+  res.json(replacementPost);
+});
+
 //CHALLENGE 5: DELETE a specific post by providing the post id.
 
 app.listen(port, () => {
